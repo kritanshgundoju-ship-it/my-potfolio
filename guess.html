@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Guess the Number</title>
+<style>
+body { background: #f0f4ff; font-family: Arial; display: flex; justify-content: center; padding: 40px; }
+.card { background: white; padding: 40px; border-radius: 16px; width: 360px; text-align: center; }
+h1 { color: #4a90e2; }
+input { width: 80%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; font-size: 18px; text-align: center; }
+button { background: #4a90e2; color: white; padding: 10px 24px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin: 6px; }
+#feedback { font-size: 20px; font-weight: bold; margin-top: 16px; min-height: 30px; }
+#guesses { font-size: 15px; color: #888; margin-top: 8px; }
+#playagain { display: none; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Guess the Number 🎯</h1>
+  <p>I picked a number between <b>1</b> and <b>100</b>. Can you guess it?</p>
+  <input type="number" id="guess" placeholder="Your guess...">
+  <br>
+  <button onclick="checkGuess()">Guess!</button>
+  <button id="playagain" onclick="startGame()">Play Again</button>
+  <p id="feedback"></p>
+  <p id="guesses"></p>
+</div>
+
+<script>
+let secretNumber;
+let guessCount;
+
+function startGame() {
+  secretNumber = Math.floor(Math.random() * 100) + 1;
+  guessCount = 0;
+  document.getElementById("feedback").innerHTML = "";
+  document.getElementById("guesses").innerHTML = "";
+  document.getElementById("guess").value = "";
+  document.getElementById("playagain").style.display = "none";
+}
+
+function checkGuess() {
+  let userGuess = Number(document.getElementById("guess").value);
+
+  if (userGuess == "" || userGuess < 1 || userGuess > 100) {
+    document.getElementById("feedback").innerHTML = "Please enter a number between 1 and 100!";
+    document.getElementById("feedback").style.color = "#e24a4a";
+    return;
+  }
+
+  guessCount = guessCount + 1;
+
+  if (userGuess < secretNumber) {
+    document.getElementById("feedback").innerHTML = "Too low! Try higher ⬆️";
+    document.getElementById("feedback").style.color = "#e2944a";
+  } else if (userGuess > secretNumber) {
+    document.getElementById("feedback").innerHTML = "Too high! Try lower ⬇️";
+    document.getElementById("feedback").style.color = "#e2944a";
+  } else {
+    document.getElementById("feedback").innerHTML = "Correct! 🎉 The number was " + secretNumber + "!";
+    document.getElementById("feedback").style.color = "#4ae24a";
+    document.getElementById("playagain").style.display = "inline-block";
+  }
+
+  document.getElementById("guesses").innerHTML = "Guesses so far: " + guessCount;
+  document.getElementById("guess").value = "";
+}
+
+startGame();
+</script>
+
+</body>
+</html>

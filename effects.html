@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CSS Effects</title>
+<style>
+body { background: #f0f4ff; font-family: Arial; display: flex; justify-content: center; padding: 40px; }
+.card { background: white; padding: 40px; border-radius: 16px; width: 380px; text-align: center; }
+h1 { color: #4a90e2; }
+
+/* Normal button */
+.btn {
+  background: #4a90e2;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 8px;
+  transition: all 0.3s;
+}
+
+/* What happens on hover */
+.btn:hover {
+  background: #2c6db5;
+  transform: scale(1.1);
+}
+
+/* A box that animates */
+.box {
+  width: 100px;
+  height: 100px;
+  background: #4a90e2;
+  border-radius: 12px;
+  margin: 20px auto;
+  transition: all 0.4s;
+}
+
+.box:hover {
+  background: #e24a4a;
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+
+/* Glowing text */
+.glow {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4a90e2;
+  transition: all 0.3s;
+  display: inline-block;
+  margin: 16px 0;
+}
+
+.glow:hover {
+  color: #e24a4a;
+  transform: scale(1.2);
+  letter-spacing: 4px;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>CSS Effects</h1>
+
+  <p>Hover over the button:</p>
+  <button class="btn">Hover Me!</button>
+
+  <p>Hover over the box:</p>
+  <div class="box"></div>
+
+  <p>Hover over the text:</p>
+  <div class="glow">Cool Text!</div>
+</div>
+</body>
+</html>

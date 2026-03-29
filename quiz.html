@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz Game</title>
+<style>
+body { background: #f0f4ff; font-family: Arial; display: flex; justify-content: center; padding: 40px; }
+.card { background: white; padding: 40px; border-radius: 16px; width: 400px; text-align: center; }
+h1 { color: #4a90e2; }
+h2 { color: #333; font-size: 18px; }
+button { background: #4a90e2; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; margin: 6px; width: 80%; }
+#result { font-size: 22px; font-weight: bold; color: #4a90e2; margin-top: 20px; }
+#feedback { font-size: 16px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Quiz Game</h1>
+  <h2 id="question">Press Start to begin!</h2>
+  <div id="answers"></div>
+  <p id="feedback"></p>
+  <p id="result"></p>
+  <button onclick="startQuiz()" id="startBtn">Start Quiz</button>
+</div>
+
+<script>
+let questions = [
+  { question: "What does HTML stand for?", answers: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Mode Logic", "Home Tool Markup Language"], correct: 0 },
+  { question: "Which tag makes a big heading?", answers: ["<p>", "<head>", "<h1>", "<big>"], correct: 2 },
+  { question: "Which language styles a webpage?", answers: ["HTML", "CSS", "Python", "Java"], correct: 1 }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function startQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("result").innerHTML = "";
+  showQuestion();
+}
+
+function showQuestion() {
+  let q = questions[currentQuestion];
+  document.getElementById("question").innerHTML = "Q" + (currentQuestion + 1) + ": " + q.question;
+  document.getElementById("feedback").innerHTML = "";
+
+  let answersHTML = "";
+  for (let i = 0; i < q.answers.length; i++) {
+    answersHTML = answersHTML + "<button onclick='checkAnswer(" + i + ")'>" + q.answers[i] + "</button><br>";
+  }
+  document.getElementById("answers").innerHTML = answersHTML;
+}
+
+function checkAnswer(selected) {
+  let q = questions[currentQuestion];
+
+  if (selected == q.correct) {
+    score = score + 1;
+    document.getElementById("feedback").innerHTML = "✅ Correct!";
+  } else {
+    document.getElementById("feedback").innerHTML = "❌ Wrong! The answer was: " + q.answers[q.correct];
+  }
+
+  currentQuestion = currentQuestion + 1;
+
+  if (currentQuestion < questions.length) {
+    setTimeout(showQuestion, 1500);
+  } else {
+    setTimeout(showResult, 1500);
+  }
+}
+
+function showResult() {
+  document.getElementById("question").innerHTML = "Quiz Complete!";
+  document.getElementById("answers").innerHTML = "";
+  document.getElementById("feedback").innerHTML = "";
+  document.getElementById("result").innerHTML = "You scored " + score + " out of " + questions.length + "!";
+  document.getElementById("startBtn").style.display = "inline-block";
+  document.getElementById("startBtn").innerHTML = "Play Again";
+}
+</script>
+
+</body>
+</html>

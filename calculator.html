@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator</title>
+<style>
+body { background: #f0f4ff; font-family: Arial; display: flex; justify-content: center; padding: 40px; }
+.card { background: white; padding: 40px; border-radius: 16px; width: 300px; text-align: center; }
+h1 { color: #4a90e2; }
+input { width: 80%; padding: 10px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; }
+button { background: #4a90e2; color: white; padding: 10px 24px; border: none; border-radius: 8px; font-size: 16px; margin-top: 10px; cursor: pointer; }
+#result { font-size: 24px; font-weight: bold; color: #4a90e2; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Calculator</h1>
+<input type="number" id="num1" placeholder="First number">
+<input type="number" id="num2" placeholder="Second number">
+<button onclick="calculate('+')">Add</button>
+<button onclick="calculate('-')">Subtract</button>
+<button onclick="calculate('*')">Multiply</button>
+<button onclick="calculate('/')">Divide</button>
+<p id="result"></p>
+</div>
+<script>
+function calculate(operator) {
+  let num1 = Number(document.getElementById("num1").value);
+  let num2 = Number(document.getElementById("num2").value);
+  let answer;
+
+  if (operator == "+") { answer = num1 + num2; }
+  if (operator == "-") { answer = num1 - num2; }
+  if (operator == "*") { answer = num1 * num2; }
+  if (operator == "/") { answer = num1 / num2; }
+
+  document.getElementById("result").innerHTML = "Answer: " + answer;
+}
+</script>
+</body>
+</html>

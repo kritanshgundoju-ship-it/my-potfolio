@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>To-Do List</title>
+<style>
+body { background: #f0f4ff; font-family: Arial; display: flex; justify-content: center; padding: 40px; }
+.card { background: white; padding: 40px; border-radius: 16px; width: 400px; }
+h1 { color: #4a90e2; text-align: center; }
+.input-row { display: flex; gap: 8px; margin-bottom: 20px; }
+input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; }
+button { background: #4a90e2; color: white; padding: 10px 18px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; transition: all 0.3s; }
+button:hover { background: #2c6db5; }
+.task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 6px 0;
+  background: #f0f4ff;
+  transition: all 0.3s;
+}
+.task.done { background: #e8f5e8; text-decoration: line-through; color: #aaa; }
+.task-text { flex: 1; font-size: 15px; cursor: pointer; }
+.delete-btn {
+  background: #e24a4a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+#empty { text-align: center; color: #aaa; font-size: 15px; margin-top: 20px; }
+#count { text-align: center; font-size: 13px; color: #888; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>To-Do List ✅</h1>
+  <div class="input-row">
+    <input type="text" id="taskInput" placeholder="Add a new task...">
+    <button onclick="addTask()">Add</button>
+  </div>
+  <div id="taskList"></div>
+  <p id="empty">No tasks yet — add one above!</p>
+  <p id="count"></p>
+</div>
+
+<script>
+let tasks = [];
+
+window.onload = function() {
+  let saved = localStorage.getItem("tasks");
+  if (saved != null) {
+    tasks = JSON.parse(saved);
+  }
+  renderTasks();
+}
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function addTask() {
+  let text = document.getElementById("taskInput").value;
+  if (text == "") {
+    alert("Please enter a task!");
+    return;
+  }
+  tasks.push({ text: text, done: false });
+  document.getElementById("taskInput").value = "";
+  saveTasks();
+  renderTasks();
+}
+
+function toggleTask(index) {
+  tasks[index].done = !tasks[index].done;
+  saveTasks();
+  renderTasks();
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  saveTasks();
+  renderTasks();
+}
+
+function renderTasks() {
+  let list = "";
+  for (let i = 0; i < tasks.length; i++) {
+    let doneClass = tasks[i].done ? "done" : "";
+    list = list +
+      "<div class='task " + doneClass + "'>" +
+      "<span class='task-text' onclick='toggleTask(" + i + ")'>" + tasks[i].text + "</span>" +
+      "<button class='delete-btn' onclick='deleteTask(" + i + ")'>Delete</button>" +
+      "</div>";
+  }
+  document.getElementById("taskList").innerHTML = list;
+
+  let done = 0;
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].done) { done = done + 1; }
+  }
+
+  if (tasks.length == 0) {
+    document.getElementById("empty").style.display = "block";
+    document.getElementById("count").innerHTML = "";
+  } else {
+    document.getElementById("empty").style.display = "none";
+    document.getElementById("count").innerHTML = done + " of " + tasks.length + " tasks completed";
+  }
+}
+</script>
+
+</body>
+</html>

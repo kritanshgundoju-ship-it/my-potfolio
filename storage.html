@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Note Saver</title>
+<style>
+body { background: #f0f4ff; font-family: Arial; display: flex; justify-content: center; padding: 40px; }
+.card { background: white; padding: 40px; border-radius: 16px; width: 380px; text-align: center; }
+h1 { color: #4a90e2; }
+textarea {
+  width: 90%;
+  height: 150px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  font-family: Arial;
+  resize: none;
+}
+button {
+  background: #4a90e2;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 6px;
+  transition: all 0.3s;
+}
+button:hover { background: #2c6db5; transform: scale(1.05); }
+.delete { background: #e24a4a; }
+.delete:hover { background: #b53030; }
+#status { font-size: 14px; color: #888; margin-top: 10px; min-height: 20px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Note Saver 📝</h1>
+  <p>Your note is saved automatically!</p>
+  <textarea id="note" placeholder="Type your note here..."></textarea>
+  <br>
+  <button onclick="saveNote()">Save Note</button>
+  <button class="delete" onclick="deleteNote()">Delete Note</button>
+  <p id="status"></p>
+</div>
+
+<script>
+// Load saved note when page opens
+window.onload = function() {
+  let savedNote = localStorage.getItem("myNote");
+  if (savedNote != null) {
+    document.getElementById("note").value = savedNote;
+    document.getElementById("status").innerHTML = "Note loaded from memory!";
+  }
+}
+
+function saveNote() {
+  let note = document.getElementById("note").value;
+  localStorage.setItem("myNote", note);
+  document.getElementById("status").innerHTML = "Note saved! ✅";
+}
+
+function deleteNote() {
+  localStorage.removeItem("myNote");
+  document.getElementById("note").value = "";
+  document.getElementById("status").innerHTML = "Note deleted! 🗑️";
+}
+</script>
+
+</body>
+</html>
